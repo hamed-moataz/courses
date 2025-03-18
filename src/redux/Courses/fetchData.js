@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { supabase } from "../../../createCliente";
 
 const initialState = {
   loading: false,
@@ -10,7 +10,7 @@ const initialState = {
 // fetch slices
 export const fetchCourses = createAsyncThunk("courses/fetch", async () => {
   try {
-    const data = await axios.get("http://localhost:3004/courses");
+    const data = await supabase.from('forms').select();
     return data.data;
   } catch (error) {
     return error.message;
@@ -20,7 +20,7 @@ export const fetchCourses = createAsyncThunk("courses/fetch", async () => {
 // delete slices
 export const deleteCourse = createAsyncThunk("courses/delete", async (id) => {
   try {
-    await axios.delete(`http://localhost:3004/courses/${id}`);
+    await supabase.from('forms').delete().eq('id', id);
     return id;
   } catch (error) {
     throw error.message;

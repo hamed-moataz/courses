@@ -5,11 +5,11 @@ import { fetchCourses, deleteCourse } from "../../redux/Courses/fetchData";
 import toast, { Toaster } from "react-hot-toast";
 
 const CourseList = () => {
-  const { loading, courses } = useSelector((state) => state.courses || {});
+  const { loading, courses = [] } = useSelector((state) => state.courses || {});
 
   const dispatch = useDispatch();
 
-  const [search , setSearch] = useState("")
+  const [search, setSearch] = useState("");
 
   // fetch courses
   useEffect(() => {
@@ -17,18 +17,24 @@ const CourseList = () => {
   }, [dispatch]);
 
   // delete course
-  const handleDelete = (id) => {
-    dispatch(deleteCourse(id));
-    toast.success("Course deleted successfully");
+  const handleDelete = async (id) => {
+    const result = await dispatch(deleteCourse(id));
+    if (!result.error) {
+      toast.success("Course deleted successfully");
+    } else {
+      toast.error("Failed to delete course");
+    }
   };
 
-  // search course  
-  const filteredCourses = courses.filter((course) => 
+  // search course
+  const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase())
-  )
+  );
+  console.log("Loading state:", loading);
+
   return (
     <div>
-      {loading && (
+      {loading && !courses.lenght && (
         <div role="status" className="flex justify-center items-center">
           <svg
             aria-hidden="true"
@@ -49,7 +55,7 @@ const CourseList = () => {
           <span className="sr-only">Loading...</span>
         </div>
       )}
-        <input
+      <input
         type="text"
         placeholder="Search courses..."
         className="mb-4 p-2 border rounded w-full"

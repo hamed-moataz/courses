@@ -10,14 +10,14 @@ const Home = () => {
     <div className="relative ">
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 sm:hidden z-40"
+          className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-40"
           onClick={() => setIsSidebarOpen(false)}
         ></div>
       )}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         type="button"
-        className="z-50 inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="z-50 inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -43,7 +43,7 @@ const Home = () => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="absolute top-2 right-2 text-gray-500 md:hidden"
+            className="absolute top-2 right-2 text-gray-500 lg:hidden"
           >
             ✖
           </button>
@@ -109,6 +109,7 @@ const Home = () => {
       </aside>
       <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+           {/* routing  */}
           <Routes>
             <Route path="/addCourses" element={<AddCourseForm />} />
             <Route path="/courseList" element={<CourseList />} />

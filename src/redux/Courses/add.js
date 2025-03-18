@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { supabase } from "../../../createCliente";
 
 const initialState ={
     loading:false,
@@ -8,8 +8,7 @@ const initialState ={
 }
 export const addCourse = createAsyncThunk("add", async(courseData)=>{
     try {
-        const {data} = await axios.post("http://localhost:3004/courses" , courseData)
-        return data
+       await supabase.from('forms').insert(courseData) 
     } catch (error) {
         console.log(error)
     }
@@ -19,7 +18,7 @@ export const courseSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers:(builder)=>{
-       builder.addCase(addCourse.pending, (state )=>{
+       builder.addCase(addCourse.pending, (state)=>{
            state.loading = true;
        });
        builder.addCase(addCourse.fulfilled , (state , action)=>{

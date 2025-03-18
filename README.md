@@ -1,58 +1,50 @@
-# 📦 My React + JSON Server Project
+📦 Courses Project
 
-🚀 مشروع React متكامل مع JSON Server لتخزين البيانات وعرضها بشكل ديناميكي.
-## 🚀 الميزات
-- 📡 استخدام `JSON Server` لمحاكاة الـ Backend
-- 🏗️ مبني باستخدام `React + Redux Toolkit`
-- 🎨 تصميم عصري باستخدام `Tailwind CSS & Flowbite`
-- 🔥 استخدام `Axios` لتحميل البيانات بسهولة
+🚀 مشروع React لإدارة الدورات باستخدام Supabase كـ Backend.
 
+🚀 الميزات
 
-```sh
-### **1️⃣ تثبيت الحزم**
-npm install 
+✅ Supabase كقاعدة بيانات وخدمة مصادقة
+✅ React + Redux Toolkit لإدارة الحالة
+✅ Tailwind CSS & Flowbite لتصميم عصري
+✅ react-hot-toast للإشعارات
+✅ React Router DOM للتنقل بين الصفحات
 
-## 🛠️ **التثبيت والتشغيل**
+🛠️ التثبيت والتشغيل
 
-// start project front-end
+npm install  # تثبيت الحزم
+npm run dev  # تشغيل المشروع
 
-npm run dev
-
-// start server back-end
-
-npm run server  ==>  json-server --watch db.json --port 3004
-
-by using styling ===> tailwindcss ==> flowbite react
-
-by using fetching ==> axios
+📁 هيكلة المشروع
 
 📁 Courses
- ┣ 📂 public
  ┣ 📂 src
- ┃ ┣ 📂 redux
- ┃ ┃ ┣ 📜 store.jsx
- ┃ ┣ 📂 components
- ┃ ┃ ┣ 📜 AddCourseForm.jsx
- ┃ ┃ ┣ 📜 CourseList.jsx
- ┃ ┃ ┣ 📜 Home.jsx
+ ┃ ┣ 📂 redux (إدارة الحالة)
+ ┃ ┣ 📂 components (المكونات)
  ┃ ┣ 📜 App.js
- ┣ 📜 db.json  
  ┣ 📜 package.json
  ┣ 📜 README.md
 
+🌐 الاتصال بـ Supabase
 
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient("YOUR_SUPABASE_URL", "YOUR_SUPABASE_ANON_KEY");
 
+📤 العمليات الأساسية
 
-fetch("http://localhost:3004/courses")
-  .then(res => res.json())
-  .then(data => console.log(data));
+// جلب البيانات
+const fetchCourses = async () => {
+  const { data, error } = await supabase.from("courses").select("*");
+  if (error) console.error(error);
+  return data;
+};
 
+// إضافة دورة جديدة
+const addCourse = async () => {
+  await supabase.from("courses").insert([
+    { title: "New Course", description: "Learn JavaScript", duration: 30, instructor: "John Doe" }
+  ]);
+};
 
+📜 ترخيص MIT
 
-fetch("http://localhost:3004/courses", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ Title: "New Course", description: "course java" duration: 30, instructor: "John Doe" })
-});
-
-```
